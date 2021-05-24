@@ -20,13 +20,6 @@ def getCurrentDateTimeList():
 	return todayList
 
 
-def switchMainMode(command):
-	if command == "off" and path.exists('htcaccess.on'):
-		os.rename('htcaccess.on','htcaccess.off')
-	elif command == "on" and path.exists('htcaccess.off'):
-		os.rename('htcaccess.off','htcaccess.on')
-
-
 def getAllDatesList(filename):
 	dateFile = open(filename, "r")
 
@@ -37,35 +30,28 @@ def getAllDatesList(filename):
 	return allDatesList
 
 
+def switchMaintenanceMode(command):
+	if command == "off" and path.exists('htcaccess.on'):
+		os.rename('htcaccess.on','htcaccess.off')
+		#TODO: send email saying maintenance mode has been enabled
+	elif command == "on" and path.exists('htcaccess.off'):
+		os.rename('htcaccess.off','htcaccess.on')
+		#TODO: send email saying maintenance mode has been disabled
 
-# listing directories
-#print ("The dir is: %s"%os.listdir(os.getcwd()))
+
+def compareDates(todayDateTimeList, allDatesList):
+	startList, endList = [], []
+	for dateList in allDatesList:
+		startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
+		endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
+
+	#check to see if today/current time lines up with the dates/times in the list
+	if todayList == startList: 
+		switchMaintenaceMode("on")
+	elif todayList == endList:
+		switchMaintenanceMode("off")
+
 
 todayDateTimeList = getCurrentDateTimeList()
-
-#grab list from an external txt file
 allDatesList = getAllDatesList("allTimes.txt")
-print(allDatesList)
-
-#Go through each datetime in the list
-#Compare the two time dates (todaylist & each one in list)
-for dateList in allDatesList:
-	startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
-	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
-
-	#do comparison with todayList
-	if todayList == startList:
-		#Turn on maintenace mode by first checking if mode is currently off & then renaming file  
-		switchMainMode("on")
-	elif todayList == endList:
-		#Turn off maintenance mode by first checking if mode is currently on & then renaming file
-		switchMainMode("off")
-
-
-
-
-
-
-
-#reprint
-#print ("The dir is: %s"%os.listdir(os.getcwd()))
+compareDates(todayDateTimeList, allDatesList)
