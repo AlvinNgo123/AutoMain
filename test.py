@@ -5,6 +5,20 @@ from os import path
 from datetime import datetime
 import ast
 
+def getCurrentDateTimeList():
+	currentDateTime = datetime.now()
+	currDTstring = currentDateTime.strftime("%d/%m/%Y/%H/%M/%S")
+	currDTlist = currDTstring.split('/')
+
+	currMonth = currDTlist[1]
+	currDay = currDTlist[0]
+	currYear = currDTlist[2]
+
+	currHour = currDTlist[3]
+	currMinute = currDTlist[4]
+	todayList = [currMonth, currDay, currYear, currHour, currMinute]
+	return todayList
+
 
 def switchMainMode(command):
 	if command == "off" and path.exists('htcaccess.on'):
@@ -13,36 +27,29 @@ def switchMainMode(command):
 		os.rename('htcaccess.off','htcaccess.on')
 
 
+def getAllDatesList(filename):
+	dateFile = open(filename, "r")
+
+	dateFileContents = dateFile.read()
+	allDatesList = ast.literal_eval(dateFileContents)
+
+	dateFile.close()
+	return allDatesList
+
+
+
 # listing directories
 #print ("The dir is: %s"%os.listdir(os.getcwd()))
 
-#get current date and store in separate variables
-currentDateTime = datetime.now()
-currDTstring = currentDateTime.strftime("%d/%m/%Y/%H/%M/%S")
-currDTlist = currDTstring.split('/')
-#print(currDTlist)
-
-currMonth = currDTlist[1]
-currDay = currDTlist[0]
-currYear = currDTlist[2]
-
-currHour = currDTlist[3]
-currMinute = currDTlist[4]
-todayList = [currMonth, currDay, currYear, currHour, currMinute]
-#print(today)
+todayDateTimeList = getCurrentDateTimeList()
 
 #grab list from an external txt file
-allTimesFile = open("allTimes.txt", "r")
-contents = allTimesFile.read()
-thisContentList = ast.literal_eval(contents)
-
-allTimesFile.close()
-#print(type(thisContentList))
-#print(thisContentList)
+allDatesList = getAllDatesList("allTimes.txt")
+print(allDatesList)
 
 #Go through each datetime in the list
 #Compare the two time dates (todaylist & each one in list)
-for dateList in thisContentList:
+for dateList in allDatesList:
 	startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
 	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
 
@@ -54,7 +61,6 @@ for dateList in thisContentList:
 		#Turn off maintenance mode by first checking if mode is currently on & then renaming file
 		switchMainMode("off")
 
-switchMainMode("off")
 
 
 
