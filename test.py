@@ -5,6 +5,14 @@ from os import path
 from datetime import datetime
 import ast
 
+
+def switchMainMode(command):
+	if command == "off" and path.exists('htcaccess.on'):
+		os.rename('htcaccess.on','htcaccess.off')
+	elif command == "on" and path.exists('htcaccess.off'):
+		os.rename('htcaccess.off','htcaccess.on')
+
+
 # listing directories
 #print ("The dir is: %s"%os.listdir(os.getcwd()))
 
@@ -38,13 +46,19 @@ for dateList in thisContentList:
 	startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
 	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
 
+	#do comparison with todayList
+	if todayList == startList:
+		#Turn on maintenace mode by first checking if mode is currently off & then renaming file  
+		switchMainMode("on")
+	elif todayList == endList:
+		#Turn off maintenance mode by first checking if mode is currently on & then renaming file
+		switchMainMode("off")
+
+switchMainMode("off")
 
 
-#test rename
-if path.exists('nameSuccess1.txt'):
-    os.rename('nameSuccess1.txt','nameSuccess2.txt')
-elif path.exists('nameSuccess2.txt'):
-    os.rename('nameSuccess2.txt','nameSuccess1.txt')
+
+
 
 
 #reprint
