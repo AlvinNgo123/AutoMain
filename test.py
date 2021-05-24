@@ -20,21 +20,23 @@ currYear = currDTlist[2]
 
 currHour = currDTlist[3]
 currMinute = currDTlist[4]
-testList = [currDay, currMonth, currYear, currHour, currMinute]
-#print(testList)
+todayList = [currMonth, currDay, currYear, currHour, currMinute]
+#print(today)
 
 #grab list from an external txt file
 allTimesFile = open("allTimes.txt", "r")
 contents = allTimesFile.read()
-thisContent = ast.literal_eval(contents)
+thisContentList = ast.literal_eval(contents)
 
 allTimesFile.close()
-#print(type(thisContent))
-#print(thisContent)
+#print(type(thisContentList))
+#print(thisContentList)
 
 #Go through each datetime in the list
-#Compare the two time dates (current & each one in list)
-
+#Compare the two time dates (todaylist & each one in list)
+for dateList in thisContentList:
+	startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
+	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
 
 
 
