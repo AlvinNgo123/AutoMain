@@ -1,6 +1,61 @@
 console.log("js is working")
 
-function myFunction(p1, p2) {
-  return p1 * p2;   // The function returns the product of p1 and p2
+function getCurrentDateTimeList() {
+	var currentDateTime = new Date();
+
+	var currentMonth = currentDateTime.getMonth()+1;
+	var currentDay = currentDateTime.getDate();
+	var currentYear = currentDateTime.getFullYear();
+	var currentHour = currentDateTime.getHours();
+	var currentMins = currentDateTime.getMinutes();
+
+	return [currentMonth, currentDay, currentYear, currentHour, currentMins];
 }
-console.log(myFunction(3, 3))
+
+function testCompare(currentDateTimeList, allDatesList){
+	var startList = [];
+	var endList = [];
+
+	for (const dateList of allDatesList) {
+    	startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']];
+    	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']];
+		
+		console.log(startList);
+		console.log(currentDateTimeList);
+    	if (currentDateTimeList == startList) {
+    		console.log("start");
+    		//switchMaintenaceMode("on");
+    	} else if (currentDateTimeList == endList) {
+    		//switchMaintenaceMode("off")
+    		console.log("end");
+    	}
+	}
+}
+
+
+/*def compareDates(todayDateTimeList, allDatesList):
+	startList, endList = [], []
+	for dateList in allDatesList:
+		startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
+		endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
+
+	#check to see if today/current time lines up with the dates/times in the list
+	if todayList == startList: 
+		switchMaintenaceMode("on")
+	elif todayList == endList:
+		switchMaintenanceMode("off")*/
+
+
+var currentDateTimeList = getCurrentDateTimeList();
+
+var fs = require("fs");
+fs.readFile("allTimes.txt", function(error, text) {
+	allDatesList = JSON.parse(text);
+	testCompare(currentDateTimeList, allDatesList);
+	//console.log(allDatesList);
+	//return allDatesList; 
+});
+
+
+
+
