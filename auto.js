@@ -21,35 +21,30 @@ function testCompare(currentDateTimeList, allDatesList){
     	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']];
 	
     	if (currentDateTimeList == startList) {
-    		switchMaintenaceMode("on");
+    		switchMaintenaceMode('on');
     	} else if (currentDateTimeList == endList) {
-    		switchMaintenaceMode("off");
+    		switchMaintenaceMode('off');
     	} 
 	}
 }
 
+function switchMaintenaceMode(command){
+	const fs = require('fs');
 
-/*def compareDates(todayDateTimeList, allDatesList):
-	startList, endList = [], []
-	for dateList in allDatesList:
-		startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
-		endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
-
-	#check to see if today/current time lines up with the dates/times in the list
-	if todayList == startList: 
-		switchMaintenaceMode("on")
-	elif todayList == endList:
-		switchMaintenanceMode("off")*/
+	if ((command == 'on') && (fs.existsSync('htcaccess.off'))) {
+		fs.rename('htcaccess.off', 'htcaccess.on', () => {console.log("Turned ON maintenance mode")});
+	} else if ((command == 'off') && (fs.existsSync('htcaccess.on'))) {
+		fs.rename('htcaccess.on', 'htcaccess.off', () => {console.log("Turned OFF maintenance mode")});
+	}
+}
 
 
 var currentDateTimeList = getCurrentDateTimeList();
 
-var fs = require("fs");
+const fs = require("fs");
 fs.readFile("allTimes.txt", function(error, text) {
 	allDatesList = JSON.parse(text);
 	testCompare(currentDateTimeList, allDatesList);
-	//console.log(allDatesList);
-	//return allDatesList; 
 });
 
 
