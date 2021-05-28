@@ -45,11 +45,12 @@ def compareDates(todayDateTimeList, allDatesList):
 		startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
 		endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
 
-	#check to see if today/current time lines up with the dates/times in the list
-	if todayList == startList: 
-		switchMaintenaceMode("on")
-	elif todayList == endList:
-		switchMaintenanceMode("off")
+		#check to see if today/current time lines up with the dates/times in the list
+		if todayList == startList: 
+			switchMaintenaceMode("on")
+		elif todayList == endList:
+			switchMaintenanceMode("off")
+	
 
 
 todayDateTimeList = getCurrentDateTimeList()
