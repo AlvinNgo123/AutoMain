@@ -19,16 +19,12 @@ function testCompare(currentDateTimeList, allDatesList){
 	for (const dateList of allDatesList) {
     	startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']];
     	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']];
-		
-		console.log(startList);
-		console.log(currentDateTimeList);
+	
     	if (currentDateTimeList == startList) {
-    		console.log("start");
-    		//switchMaintenaceMode("on");
+    		switchMaintenaceMode("on");
     	} else if (currentDateTimeList == endList) {
-    		//switchMaintenaceMode("off")
-    		console.log("end");
-    	}
+    		switchMaintenaceMode("off");
+    	} 
 	}
 }
 
