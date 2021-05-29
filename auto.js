@@ -12,7 +12,7 @@ function getCurrentDateTimeList() {
 	return [currentMonth, currentDay, currentYear, currentHour, currentMins];
 }
 
-function switchMaintenaceMode(command){
+function switchMaintenanceMode(command){
 	const fs = require('fs');
 
 	if ((command == 'on') && (fs.existsSync('htcaccess.off'))) {
@@ -32,10 +32,10 @@ function testCompare(currentDateTimeList, allDatesList){
     	endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']];
 
     	if ((currList[0]==startList[0]) && (currList[1]==startList[1]) && (currList[2]==startList[2]) && (currList[3]==startList[3]) && (currList[4]==startList[4])) {
-    		switchMaintenaceMode('on');
+    		switchMaintenanceMode('on');
     		break;
     	} else if ((currList[0]==endList[0]) && (currList[1]==endList[1]) && (currList[2]==endList[2]) && (currList[3]==endList[3]) && (currList[4]==endList[4])) {
-    		switchMaintenaceMode('off');
+    		switchMaintenanceMode('off');
     		break;
     	} 
 	}
@@ -46,21 +46,6 @@ const fs = require("fs");
 fs.readFile("allTimes.txt", function(error, text) {
 	allDatesList = JSON.parse(text);
 	testCompare(currentDateTimeList, allDatesList);
-
-	//debug
-	/*currList = currentDateTimeList;
-	dateList = allDatesList[0];
-	testList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']];
-	
-	if ( (currList[0]==testList[0]) && (currList[1]==testList[1]) && (currList[2]==testList[2]) && (currList[3]==testList[3]) && (currList[4]==testList[4]) ){
-		console.log(currList);
-		console.log(testList);
-		console.log('YES');
-	}else {
-		console.log(currList);
-		console.log(testList);
-		console.log("NOPE");
-	}*/
 });
 
 
