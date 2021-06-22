@@ -15,12 +15,12 @@
         "startMonth": 6,
         "startDay": 22,
         "startYear": 2021,
-        "startHour": 12,
-        "startMinute": 7,
+        "startHour": 13,
+        "startMinute": 46,
         "endMonth": 6,
         "endDay": 22,
         "endYear": 2021,
-        "endHour": 12,
-        "endMinute": 8
+        "endHour": 13,
+        "endMinute": 48
     }
 ]

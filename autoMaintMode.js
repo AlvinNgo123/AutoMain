@@ -3,17 +3,11 @@ console.log("js is working")
 function getCurrentDateTimeList() {
 	let currentDateTime = new Date();
 
-	let currentMonthStr = String(currentDateTime.getMonth()+1);
-	let currentMonth = currentMonthStr.padStart(2, '0');
-	let currentDayStr = String(currentDateTime.getDate());
-	let currentDay = currentDayStr.padStart(2, '0');
-	let currentYearStr = String(currentDateTime.getFullYear());
-	let currentYear = currentYearStr.padStart(4, '20');
-
-	let currentHourStr = String(currentDateTime.getHours());
-	let currentHour = currentHourStr.padStart(2, '0');
-	let currentMinsStr = String(currentDateTime.getMinutes());
-	let currentMins = currentMinsStr.padStart(2, '0');
+	let currentMonth = currentDateTime.getMonth()+1;
+	let currentDay = currentDateTime.getDate();
+	let currentYear = currentDateTime.getFullYear();
+	let currentHour = currentDateTime.getHours();
+	let currentMins = currentDateTime.getMinutes();
 	
 
 	return [currentMonth, currentDay, currentYear, currentHour, currentMins];
@@ -21,8 +15,8 @@ function getCurrentDateTimeList() {
 
 function switchMaintenanceMode(command, timeList){
 	const fs = require('fs');
-	let dateStr = String(timeList[0]) + "/" + String(timeList[1]) + "/" + String(timeList[2]);
-	let timeStr = String(timeList[3]) + ":" + String(timeList[4]);
+	let dateStr = String(timeList[0]).padStart(2, '0') + "/" + String(timeList[1]).padStart(2, '0') + "/" + String(timeList[2]).padStart(4, '20');
+	let timeStr = String(timeList[3]).padStart(2, '0') + ":" + String(timeList[4]).padStart(2, '0');
 	let dateTimeStr = dateStr + " " + timeStr;
 
 	if ((command == 'on') && (fs.existsSync('htcaccess.off'))) {
