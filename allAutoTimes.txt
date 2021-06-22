@@ -12,15 +12,15 @@
         "endMinute": 45
     },
     {
-        "startMonth": 5,
-        "startDay": 19,
+        "startMonth": 6,
+        "startDay": 22,
         "startYear": 2021,
-        "startHour": 13,
-        "startMinute": 30,
-        "endMonth": 5,
-        "endDay": 19,
+        "startHour": 12,
+        "startMinute": 7,
+        "endMonth": 6,
+        "endDay": 22,
         "endYear": 2021,
-        "endHour": 15,
-        "endMinute": 30
+        "endHour": 12,
+        "endMinute": 8
     }
 ]
