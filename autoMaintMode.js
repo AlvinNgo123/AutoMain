@@ -19,16 +19,16 @@ function switchMaintenanceMode(command, timeList){
 	let timeStr = String(timeList[3]).padStart(2, '0') + ":" + String(timeList[4]).padStart(2, '0');
 	let dateTimeStr = dateStr + " " + timeStr;
 
-	if ((command == 'on') && (fs.existsSync('htcaccess.off'))) {
-		fs.rename('htcaccess.off', 'htcaccess.on', () => {
+	if ((command == 'on') && (fs.existsSync('.htaccess.off'))) {
+		fs.rename('.htaccess.off', '.htaccess', () => {
 			let turnOnMsg = dateTimeStr + " - Turned ON maintenance mode\n";
 			console.log(turnOnMsg);
 			fs.appendFile("autoMaintLog.txt", turnOnMsg, (err) => {
 				if (err) throw err;
 			});
 		});
-	} else if ((command == 'off') && (fs.existsSync('htcaccess.on'))) {
-		fs.rename('htcaccess.on', 'htcaccess.off', () => {
+	} else if ((command == 'off') && (fs.existsSync('.htaccess'))) {
+		fs.rename('.htaccess', '.htaccess.off', () => {
 			let turnOffMsg = dateTimeStr + " - Turned OFF maintenance mode\n";
 			console.log(turnOffMsg);
 			fs.appendFile("autoMaintLog.txt", turnOffMsg, (err) => {
