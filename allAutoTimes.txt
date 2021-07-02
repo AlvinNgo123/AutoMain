@@ -15,12 +15,12 @@
         "startMonth": "07",
         "startDay": "02",
         "startYear": "2021",
-        "startHour": "15",
-        "startMinute": "42",
+        "startHour": "16",
+        "startMinute": "10",
         "endMonth": "07",
         "endDay": "02",
         "endYear": "2021",
-        "endHour": "15",
-        "endMinute": "45"
+        "endHour": "16",
+        "endMinute": "11"
     }
 ]

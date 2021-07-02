@@ -38,19 +38,15 @@ def getAllDatesList(filename):
 	return allDatesList
 
 def switchMaintenanceMode(command):
-	'''if command == "off" and path.exists('htcaccess.on'):
-		os.rename('htcaccess.on','htcaccess.off')
+	if command == "off" and path.exists('.htaccess'):
+		print("turning off")
+		os.rename('.htaccess','.htaccess.off')
 		#TODO: send email saying maintenance mode has been enabled
-	elif command == "on" and path.exists('htcaccess.off'):
-		os.rename('htcaccess.off','htcaccess.on')
-		#TODO: send email saying maintenance mode has been disabled'''
-
-	if command == "off" and path.exists('.htcaccess'):
-		os.rename('.htcaccess','.htcaccess.off')
-		#TODO: send email saying maintenance mode has been enabled
-	elif command == "on" and path.exists('.htcaccess.off'):
-		os.rename('.htcaccess.off','.htcaccess')
+	elif command == "on" and path.exists('.htaccess.off'):
+		print("turning on")
+		os.rename('.htaccess.off','.htaccess')
 		#TODO: send email saying maintenance mode has been disabled
+
 
 def compareDates(todayDateTimeList, allDatesList):
 	startList, endList = [], []
@@ -60,7 +56,7 @@ def compareDates(todayDateTimeList, allDatesList):
 
 		#check to see if today/current time lines up with the dates/times in the list
 		if todayDateTimeList == startList: 
-			switchMaintenaceMode("on")
+			switchMaintenanceMode("on")
 			print("here")
 		elif todayDateTimeList == endList:
 			switchMaintenanceMode("off")
