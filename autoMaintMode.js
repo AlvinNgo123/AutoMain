@@ -20,7 +20,6 @@ function switchMaintenanceMode(command, timeList){
 	if ((command == 'on') && (fs.existsSync('.htaccess.off'))) {
 		fs.rename('.htaccess.off', '.htaccess', () => {
 			let turnOnMsg = dateTimeStr + " - Turned ON maintenance mode\n";
-			console.log(turnOnMsg);
 			fs.appendFile("autoMaintLog.txt", turnOnMsg, (err) => {
 				if (err) throw err;
 			});
@@ -28,7 +27,6 @@ function switchMaintenanceMode(command, timeList){
 	} else if ((command == 'off') && (fs.existsSync('.htaccess'))) {
 		fs.rename('.htaccess', '.htaccess.off', () => {
 			let turnOffMsg = dateTimeStr + " - Turned OFF maintenance mode\n";
-			console.log(turnOffMsg);
 			fs.appendFile("autoMaintLog.txt", turnOffMsg, (err) => {
 				if (err) throw err;
 			});

@@ -1,26 +1,26 @@
 [
     {
-        "startMonth": 5,
-        "startDay": 30,
-        "startYear": 2021,
-        "startHour": 22,
-        "startMinute": 44,
-        "endMonth": 5,
-        "endDay": 30,
-        "endYear": 2021,
-        "endHour": 22,
-        "endMinute": 45
+        "startMonth": "05",
+        "startDay": "30",
+        "startYear": "2021",
+        "startHour": "22",
+        "startMinute": "44",
+        "endMonth": "05",
+        "endDay": "30",
+        "endYear": "2021",
+        "endHour": "22",
+        "endMinute": "45"
     },
     {
-        "startMonth": 6,
-        "startDay": 22,
-        "startYear": 2021,
-        "startHour": 19,
-        "startMinute": 1,
-        "endMonth": 6,
-        "endDay": 22,
-        "endYear": 2021,
-        "endHour": 19,
-        "endMinute": 2
+        "startMonth": "06",
+        "startDay": "22",
+        "startYear": "2021",
+        "startHour": "19",
+        "startMinute": "01",
+        "endMonth": "06",
+        "endDay": "22",
+        "endYear": "2021",
+        "endHour": "19",
+        "endMinute": "02"
     }
 ]

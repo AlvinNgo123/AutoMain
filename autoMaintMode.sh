@@ -1,0 +1,1 @@
+echo "Hello World!" >> /var/www/html/admin/autoMaintLog.txt
