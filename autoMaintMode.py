@@ -19,14 +19,21 @@ def getCurrentDateTimeList():
 	todayList = [currMonth, currDay, currYear, currHour, currMinute]
 	return todayList
 
-def logProgramRunning(todayDateTimeList):
-	fileLog = open("autoMaintLog.txt", "a")
-	#fileLog = open("/var/www/html/admin/autoMaintLog.txt", "a") 
+
+def logProgramStatus(todayDateTimeList, command):
+	#fileLog = open("autoMaintLog.txt", "a")
+	fileLog = open("/var/www/html/admin/autoMaintLog.txt", "a") 
 	dateLogLine = todayDateTimeList[0] + "/" + todayDateTimeList[1] + "/" + todayDateTimeList[2] 
 	timeLogLine = todayDateTimeList[3] + ":" + todayDateTimeList[4]  
 
-	fileLog.write(dateLogLine + " " + timeLogLine + " - Cron Scheduler was ran\n")
+	if command == 'run':
+		fileLog.write(dateLogLine + " " + timeLogLine + " - Cron Scheduler was ran\n")
+	elif command == 'on':
+		fileLog.write(dateLogLine + " " + timeLogLine + " - Cron turned ON maintenance mode\n")
+	elif command == 'off':
+		fileLog.write(dateLogLine + " " + timeLogLine + " - Cron turned OFF maintenance mode\n")
 	fileLog.close()
+
 
 def getAllDatesList(filename):
 	dateFile = open(filename, "r")
@@ -37,14 +44,19 @@ def getAllDatesList(filename):
 	dateFile.close()
 	return allDatesList
 
-def switchMaintenanceMode(command):
-	if command == "off" and path.exists('.htaccess'):
-		print("turning off")
-		os.rename('.htaccess','.htaccess.off')
+
+def switchMaintenanceMode(command, todayDateTimeList):
+	if command == "off" and path.exists('/var/www/html/forms/.htaccess'):
+	#if command == "off" and path.exists('.htaccess'):
+		os.rename('/var/www/html/forms/.htaccess','/var/www/html/forms/.htaccess.off')
+		#os.rename('.htaccess','.htaccess.off')
+		logProgramStatus(todayDateTimeList, command)
 		#TODO: send email saying maintenance mode has been enabled
-	elif command == "on" and path.exists('.htaccess.off'):
-		print("turning on")
-		os.rename('.htaccess.off','.htaccess')
+	elif command == "on" and path.exists('/var/www/html/forms/.htaccess.off'):
+	#elif command == "on" and path.exists('.htaccess.off'):	
+		os.rename('/var/www/html/forms/.htaccess.off','/var/www/html/forms/.htaccess')
+		#os.rename('.htaccess.off','.htaccess')
+		logProgramStatus(todayDateTimeList, command)
 		#TODO: send email saying maintenance mode has been disabled
 
 
@@ -56,14 +68,13 @@ def compareDates(todayDateTimeList, allDatesList):
 
 		#check to see if today/current time lines up with the dates/times in the list
 		if todayDateTimeList == startList: 
-			switchMaintenanceMode("on")
-			print("here")
+			switchMaintenanceMode("on", todayDateTimeList)
 		elif todayDateTimeList == endList:
-			switchMaintenanceMode("off")
-			print("there")
+			switchMaintenanceMode("off", todayDateTimeList)
+
 
 todayDateTimeList = getCurrentDateTimeList()
-logProgramRunning(todayDateTimeList)
-allDatesList = getAllDatesList("allAutoTimes.txt")
-#allDatesList = getAllDatesList("/var/www/html/admin/allAutoTimes.txt")
+logProgramStatus(todayDateTimeList, "run")
+#allDatesList = getAllDatesList("allAutoTimes.txt")
+allDatesList = getAllDatesList("/var/www/html/admin/allAutoTimes.txt")
 compareDates(todayDateTimeList, allDatesList)
