@@ -45,19 +45,38 @@ def getAllDatesList(filename):
 	return allDatesList
 
 
+def styleDatesTxt(allDatesList):
+	oldDateFile = open("/var/www/html/admin/.timesStyled/styledDates.html", "w")
+	#oldDateFile = open("timesStyled/styledDates.html", "w")
+	oldDateFile.write("")
+	oldDateFile.close()
+	
+	newDateFile = open("/var/www/html/admin/.timesStyled/styledDates.html", "a")
+	#newDateFile = open("timesStyled/styledDates.html", "a")
+	startList, endList = [], []
+	for dateList in allDatesList:
+		startList = [dateList['startMonth'], dateList['startDay'], dateList['startYear'], dateList['startHour'], dateList['startMinute']] 
+		endList = [dateList['endMonth'], dateList['endDay'], dateList['endYear'], dateList['endHour'], dateList['endMinute']]
+		
+		turnOnString = startList[0] + "/" + startList[1] + "/" + startList[2] + " " + startList[3] + ":" + startList[4] 
+		turnOffString = endList[0] + "/" + endList[1] + "/" + endList[2] + " " + endList[3] + ":" + endList[4]
+
+		newDateFile.write("ON: " + turnOnString + "<br>")
+		newDateFile.write("OFF: " + turnOffString + "<br><br>")
+
+	newDateFile.close()
+
 def switchMaintenanceMode(command, todayDateTimeList):
 	if command == "off" and path.exists('/var/www/html/forms/.htaccess'):
 	#if command == "off" and path.exists('.htaccess'):
 		os.rename('/var/www/html/forms/.htaccess','/var/www/html/forms/.htaccess.off')
 		#os.rename('.htaccess','.htaccess.off')
 		logProgramStatus(todayDateTimeList, command)
-		#TODO: send email saying maintenance mode has been enabled
 	elif command == "on" and path.exists('/var/www/html/forms/.htaccess.off'):
 	#elif command == "on" and path.exists('.htaccess.off'):	
 		os.rename('/var/www/html/forms/.htaccess.off','/var/www/html/forms/.htaccess')
 		#os.rename('.htaccess.off','.htaccess')
 		logProgramStatus(todayDateTimeList, command)
-		#TODO: send email saying maintenance mode has been disabled
 
 
 def compareDates(todayDateTimeList, allDatesList):
@@ -72,9 +91,12 @@ def compareDates(todayDateTimeList, allDatesList):
 		elif todayDateTimeList == endList:
 			switchMaintenanceMode("off", todayDateTimeList)
 
+def main():
+	todayDateTimeList = getCurrentDateTimeList()
+	logProgramStatus(todayDateTimeList, "run")
+	#allDatesList = getAllDatesList("allAutoTimes.txt")
+	allDatesList = getAllDatesList("/var/www/html/admin/allAutoTimes.txt")
+	styleDatesTxt(allDatesList)
+	compareDates(todayDateTimeList, allDatesList)
 
-todayDateTimeList = getCurrentDateTimeList()
-logProgramStatus(todayDateTimeList, "run")
-#allDatesList = getAllDatesList("allAutoTimes.txt")
-allDatesList = getAllDatesList("/var/www/html/admin/allAutoTimes.txt")
-compareDates(todayDateTimeList, allDatesList)
+main()
